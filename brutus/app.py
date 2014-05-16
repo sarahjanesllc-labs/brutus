@@ -63,14 +63,20 @@ class Application(tornado.web.Application):
         urls = [
             (r"/", "brutus.views.index"),
             (r"/about", "brutus.views.about"),
-            (r"/vendor", "brutus.vendor.views.index"),
+            (r"/login", "brutus.views.login"),
+            (r"/logout", "brutus.views.logout"),
+            # Consumer routes
+            (r"/browse", "brutus.consumer.views.index"),
+            # Vendor routes
+            (r"/manage", "brutus.vendor.views.index"),
         ]
         settings = dict(
             template_path=self.cfg.app_path,
-            static_path=None,
+            static_path=os.path.join(self.cfg.app_path, "public"),
             xsrf_cookies=False if self.opts.debug else True,
             cookie_secret="i love cookies!!@!#!@!",
             debug=self.opts.debug,
-            ui_modules={}
-            )
+            ui_modules={},
+            login_url="/login",
+        )
         tornado.web.Application.__init__(self, urls, **settings)
