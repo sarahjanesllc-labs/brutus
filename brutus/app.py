@@ -11,6 +11,10 @@ from tornado.escape import to_unicode
 
 
 class Handler(tornado.web.RequestHandler):
+    @property
+    def cfg(self):
+        return self.application.cfg
+
     def head(self, *args, **kwargs):
         self.get(*args, **kwargs)
         self.request.body = ''
@@ -18,7 +22,7 @@ class Handler(tornado.web.RequestHandler):
     def is_argument_present(self, name):
         return not (self.request.arguments.get(name, None) == None)
 
-    def get_current_userid(self):
+    def get_current_user(self):
         return to_unicode(self.get_secure_cookie('userid'))
 
     def get_secure_cookie(self, name, if_none=""):
@@ -53,19 +57,20 @@ class Handler(tornado.web.RequestHandler):
 
 
 class Application(tornado.web.Application):
-    def __init__(self, opts):
+    def __init__(self, opts, cfg):
         self.opts = opts
+        self.cfg = cfg
         urls = [
             (r"/", "brutus.views.index"),
             (r"/about", "brutus.views.about"),
+            (r"/vendor", "brutus.vendor.views.index"),
         ]
-        ui_modules_map = {}
         settings = dict(
-            template_path=None,
+            template_path=self.cfg.app_path,
             static_path=None,
             xsrf_cookies=False if self.opts.debug else True,
             cookie_secret="i love cookies!!@!#!@!",
             debug=self.opts.debug,
-            ui_modules=ui_modules_map,
+            ui_modules={}
             )
         tornado.web.Application.__init__(self, urls, **settings)
