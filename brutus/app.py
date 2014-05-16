@@ -71,7 +71,7 @@ class Application(tornado.web.Application):
             (r"/manage", "brutus.vendor.views.index"),
         ]
         settings = dict(
-            template_path=self.cfg.app_path,
+            template_path=os.path.join(self.cfg.app_path, "templates"),
             static_path=os.path.join(self.cfg.app_path, "public"),
             xsrf_cookies=False if self.opts.debug else True,
             cookie_secret="i love cookies!!@!#!@!",
