@@ -63,12 +63,16 @@ class Application(tornado.web.Application):
         urls = [
             (r"/", "brutus.views.index"),
             (r"/about", "brutus.views.about"),
+            (r"/get-started", "brutus.views.get_started"),
+            (r"/pricing", "brutus.views.pricing"),
             (r"/login", "brutus.views.login"),
             (r"/logout", "brutus.views.logout"),
             # Consumer routes
-            (r"/browse", "brutus.consumer.views.index"),
+            (r"/explore", "brutus.consumer.views.index"),
             # Vendor routes
-            (r"/manage", "brutus.vendor.views.index"),
+            (r"/vendor", "brutus.vendor.views.index"),
+            # Management routes
+            (r"/manage", "brutus.manager.views.index"),
         ]
         settings = dict(
             template_path=os.path.join(self.cfg.app_path, "templates"),
