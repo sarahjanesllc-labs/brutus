@@ -14,7 +14,7 @@ setup(name='brutus',
       url='https://github.com/sarahjanesllc-labs/brutus',
       license='MIT',
       packages=find_packages(),
-      install_requires=["PyYAML", "requests", "tornado"],
+      install_requires=["PyYAML", "requests", "tornado", "sqlalchemy"],
       entry_points={
           "console_scripts": [
               'brutus = brutus.cli:main']},
