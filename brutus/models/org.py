@@ -12,7 +12,7 @@ from brutus.models import Base
 
 
 class Org(Base):
-    __tablename__ = "org"
+    __tablename__ = "orgs"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=True)
