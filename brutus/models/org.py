@@ -16,6 +16,14 @@ class Org(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=True)
+    description = Column(Text)
+    hours = Column(Text)
+    street = Column(String)
+    city = Column(String)
+    zipcode = Column(String)
+    longitude = Column(Float)
+    latitude = Column(Float)
+    created = Column(DateTime)
     created = Column(DateTime)
 
     def __repr__(self):
