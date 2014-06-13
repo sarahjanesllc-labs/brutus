@@ -1,12 +1,8 @@
 """ app - application interface """
 
 import os
-import re
-import sys
-import logging
 import tornado.web
-from json import dumps, loads
-from tornado.log import app_log
+from json import dumps
 from tornado.escape import to_unicode
 
 
@@ -20,14 +16,14 @@ class Handler(tornado.web.RequestHandler):
         self.request.body = ''
 
     def is_argument_present(self, name):
-        return not (self.request.arguments.get(name, None) == None)
+        return not (self.request.arguments.get(name, None) is None)
 
     def get_current_user(self):
         return to_unicode(self.get_secure_cookie('userid'))
 
     def get_secure_cookie(self, name, if_none=""):
         cook = tornado.web.RequestHandler.get_secure_cookie(self, name)
-        if cook == None:
+        if cook is None:
             return if_none
         return cook
 

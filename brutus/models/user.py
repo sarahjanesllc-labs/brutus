@@ -19,6 +19,5 @@ class User(Base):
     created = Column(DateTime)
 
     def __repr__(self):
-        return "<User(id={_id}, username={u}, email={e})>".format(_id=self.id,
-                                                                  u=self.username,
-                                                                  e=self.email)
+        return "<User(id={_id}, username={u}, " \
+               "email={e})>".format(_id=self.id, u=self.username, e=self.email)

@@ -1,8 +1,6 @@
 """ cli - brutus commands """
 
 import os
-import re
-import sys
 import yaml
 import logging
 import tornado.httpserver
@@ -26,8 +24,8 @@ cfg_stub = dict(name='Brutus',
 
 define("port", default=9000, help="port", type=int)
 define("debug", default=False, help="run in debug mode", type=bool)
-define("config", default=cfg,
-       help="config", type=str)
+define("config", default=cfg, help="config", type=str)
+
 
 def main():
     """ entry """
@@ -47,13 +45,15 @@ def main():
         cfg = ObjectDict(yaml.load(f.read()))
 
     if not os.path.isdir(cfg.app_path):
-        app_log.critical("{p} isn't accessible, maybe create it?".format(p=cfg.app_path))
+        app_log.critical("{p} isn't accessible, maybe "
+                         "create it?".format(p=cfg.app_path))
         raise SystemExit()
     app_log.debug("Starting {name} on port {port}".format(name=cfg.name,
                                                           port=options.port))
     # initialize the application
     tornado.httpserver.HTTPServer(Application(options,
-                                              cfg)).listen(options.port, '0.0.0.0')
+                                              cfg)).listen(options.port,
+                                                           '0.0.0.0')
     ioloop = tornado.ioloop.IOLoop.instance()
     if options.debug:
         tornado.autoreload.start(ioloop)
