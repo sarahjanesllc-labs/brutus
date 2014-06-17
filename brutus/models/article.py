@@ -17,6 +17,7 @@ class Article(Base):
     created = Column(DateTime)
     modified = Column(DateTime)
     published = Column(DateTime)
+    vendor_id = Column(Integer, ForeignKey('vendor.id'))
 
     def __repr__(self):
         return "<Article(id={_id}, title={title})>".format(_id=self.id,

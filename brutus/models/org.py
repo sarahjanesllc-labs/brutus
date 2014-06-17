@@ -25,6 +25,7 @@ class Org(Base):
     latitude = Column(Float)
     created = Column(DateTime)
     created = Column(DateTime)
+    user = relationship('User')
 
     def __repr__(self):
         return "<Org(id={_id}, name={n})>".format(_id=self.id,

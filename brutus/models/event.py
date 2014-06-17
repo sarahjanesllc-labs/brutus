@@ -19,6 +19,7 @@ class Event(Base):
     stopdate = Column(DateTime)
     starttime = Column(DateTime)
     stoptime = Column(DateTime)
+    vendor_id = Column(Integer, ForeignKey('vendor.id'))
 
     def __repr__(self):
         return "<Event(id={_id}, title={t})>".format(_id=self.id,

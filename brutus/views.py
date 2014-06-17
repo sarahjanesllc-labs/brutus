@@ -5,16 +5,17 @@ from brutus.app import Handler
 
 class index(Handler):
     def get(self):
-        self.render_json({'status': 'it works!'})
+        self.render("home.html")
 
 
 class about(Handler):
     def get(self):
-        self.render_json({'status': 'about us!'})
+        self.render("about.html")
 
 
-class start(Handler):
-    pass
+class explore(Handler):
+    def get(self):
+        self.render("explore.html")
 
 
 class pricing(Handler):

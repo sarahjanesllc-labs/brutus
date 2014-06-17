@@ -3,7 +3,7 @@
 from sqlalchemy import (Column, ForeignKey, Boolean,
                         Integer, String,
                         DateTime, Text)
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from brutus.models import Base
 
@@ -15,8 +15,9 @@ class User(Base):
     username = Column(String(250), nullable=False)
     password = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    is_staff = Column(Boolean)
     created = Column(DateTime)
+    vendor_id = Column(Integer, ForeignKey('vendor.id'))
+    org_id = Column(Integer, ForeignKey('org.id'))
 
     def __repr__(self):
         return "<User(id={_id}, username={u}, " \

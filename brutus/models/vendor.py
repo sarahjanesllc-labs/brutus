@@ -2,7 +2,7 @@
 
 from sqlalchemy import (Column, Sequence, ForeignKey, Boolean,
                         Integer, String, Float, DateTime, Text)
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from brutus.models import Base
 
@@ -19,6 +19,11 @@ class Vendor(Base):
     longitude = Column(Float)
     latitude = Column(Float)
     created = Column(DateTime)
+    website = Column(String)
+    summary = Column(Text)
+    user = relationship('User')
+    article = relationship('Article')
+    event = relationship('Event')
 
     def __repr__(self):
         return "<Vendor(id={_id}, " \
