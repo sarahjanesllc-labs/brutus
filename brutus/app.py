@@ -53,29 +53,13 @@ class Handler(tornado.web.RequestHandler):
 
 
 class Application(tornado.web.Application):
-    def __init__(self, opts, cfg):
+    def __init__(self, opts, conf):
         self.opts = opts
-        self.cfg = cfg
+        self.conf = conf
         urls = self.route_add()
-        urls.append(
-              (r"/(.*)", tornado.web.StaticFileHandler,
-                  dict(path=os.path.join(self.cfg.app_path, "index.html"))))
-        urls.append(
-              (r"/css/(.*)", tornado.web.StaticFileHandler,
-                  dict(path=os.path.join(self.cfg.app_path, "css"))))
-        urls.append(
-              (r"/fonts/(.*)", tornado.web.StaticFileHandler,
-                  dict(path=os.path.join(self.cfg.app_path, "fonts"))))
-        urls.append(
-              (r"/js/(.*)", tornado.web.StaticFileHandler,
-                  dict(path=os.path.join(self.cfg.app_path, "js"))))
-        urls.append(
-              (r"/images/(.*)", tornado.web.StaticFileHandler,
-                  dict(path=os.path.join(self.cfg.app_path, "images"))))
-
         settings = dict(
             template_path=None,
-            static_path=os.path.join(self.cfg.app_path),
+            static_path=None,
             xsrf_cookies=False if self.opts.debug else True,
             cookie_secret="i love cookies!!@!#!@!",
             debug=self.opts.debug)
@@ -84,10 +68,10 @@ class Application(tornado.web.Application):
     def route_add(self):
         """ routes url to api endpoint """
         urls = []
-        for segment, endpoint in self.cfg.routes:
+        for segment, endpoint in self.conf.routes:
             urls.append((r"/api/{v}/{s}".format(
-                v=self.cfg.api_version,
+                v=self.conf.api_version,
                 s=segment), "brutus.api.{v}.{e}".format(
-                    v=self.cfg.api_version,
+                    v=self.conf.api_version,
                     e=endpoint)))
         return urls
