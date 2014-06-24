@@ -60,6 +60,18 @@ class Application(tornado.web.Application):
         urls.append(
               (r"/(.*)", tornado.web.StaticFileHandler,
                   dict(path=os.path.join(self.cfg.app_path, "index.html"))))
+        urls.append(
+              (r"/css/(.*)", tornado.web.StaticFileHandler,
+                  dict(path=os.path.join(self.cfg.app_path, "css"))))
+        urls.append(
+              (r"/fonts/(.*)", tornado.web.StaticFileHandler,
+                  dict(path=os.path.join(self.cfg.app_path, "fonts"))))
+        urls.append(
+              (r"/js/(.*)", tornado.web.StaticFileHandler,
+                  dict(path=os.path.join(self.cfg.app_path, "js"))))
+        urls.append(
+              (r"/images/(.*)", tornado.web.StaticFileHandler,
+                  dict(path=os.path.join(self.cfg.app_path, "images"))))
 
         settings = dict(
             template_path=None,
