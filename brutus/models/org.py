@@ -3,12 +3,13 @@
 The org model is for Market Managers
 """
 
-from sqlalchemy import (Column, ForeignKey,
+from sqlalchemy import (Column,
                         Integer, String,
-                        DateTime, Text)
+                        DateTime, Text, Float)
 from sqlalchemy.orm import relationship
 
 from brutus.models import Base
+from brutus.models.user import User
 
 
 class Org(Base):
@@ -23,7 +24,6 @@ class Org(Base):
     zipcode = Column(String)
     longitude = Column(Float)
     latitude = Column(Float)
-    created = Column(DateTime)
     created = Column(DateTime)
     user = relationship('User')
 

@@ -1,6 +1,6 @@
 """ brutus/models/vendor - vendor model """
 
-from sqlalchemy import (Column, Sequence, ForeignKey, Boolean,
+from sqlalchemy import (Column, Sequence,
                         Integer, String, Float, DateTime, Text)
 from sqlalchemy.orm import relationship, backref
 
@@ -22,8 +22,6 @@ class Vendor(Base):
     website = Column(String)
     summary = Column(Text)
     user = relationship('User')
-    article = relationship('Article')
-    event = relationship('Event')
 
     def __repr__(self):
         return "<Vendor(id={_id}, " \

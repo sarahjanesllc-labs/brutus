@@ -2,7 +2,7 @@
 
 from sqlalchemy import (Column, ForeignKey, Boolean,
                         Integer, String,
-                        DateTime, Text)
+                        DateTime)
 from sqlalchemy.orm import relationship, backref
 
 from brutus.models import Base
@@ -16,6 +16,7 @@ class User(Base):
     password = Column(String, nullable=False)
     email = Column(String, nullable=False)
     created = Column(DateTime)
+    is_admin = Boolean()
     vendor_id = Column(Integer, ForeignKey('vendor.id'))
     org_id = Column(Integer, ForeignKey('org.id'))
 

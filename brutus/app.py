@@ -56,27 +56,26 @@ class Application(tornado.web.Application):
     def __init__(self, opts, cfg):
         self.opts = opts
         self.cfg = cfg
-        urls = [
-            (r"/", "brutus.views.index"),
-            (r"/about", "brutus.views.about"),
-            (r"/start", "brutus.views.start"),
-            (r"/pricing", "brutus.views.pricing"),
-            (r"/login", "brutus.views.login"),
-            (r"/logout", "brutus.views.logout"),
-            # Consumer routes
-            # (r"/explore", "brutus.consumer.views.index"),
-            # Vendor routes
-            (r"/vendor", "brutus.vendor.views.index"),
-            # Management routes
-            # (r"/manage", "brutus.manager.views.index"),
-        ]
+        urls = self.route_add()
+        urls.append(
+              (r"/(.*)", tornado.web.StaticFileHandler,
+                  dict(path=os.path.join(self.cfg.app_path, "index.html"))))
+
         settings = dict(
-            template_path=os.path.join(self.cfg.app_path, "templates"),
-            static_path=os.path.join(self.cfg.app_path, "public"),
+            template_path=None,
+            static_path=os.path.join(self.cfg.app_path),
             xsrf_cookies=False if self.opts.debug else True,
             cookie_secret="i love cookies!!@!#!@!",
-            debug=self.opts.debug,
-            ui_modules={},
-            login_url="/login",
-        )
+            debug=self.opts.debug)
         tornado.web.Application.__init__(self, urls, **settings)
+
+    def route_add(self):
+        """ routes url to api endpoint """
+        urls = []
+        for segment, endpoint in self.cfg.routes:
+            urls.append((r"/api/{v}/{s}".format(
+                v=self.cfg.api_version,
+                s=segment), "brutus.api.{v}.{e}".format(
+                    v=self.cfg.api_version,
+                    e=endpoint)))
+        return urls

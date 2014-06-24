@@ -16,8 +16,12 @@ from tornado.util import ObjectDict
 cfg = os.path.expanduser("~/.brutus.yml")
 cfg_stub = dict(name='Brutus',
                 description="farmers market meet internets.",
-                theme='cornfield',
                 version='0.0.1',
+                api_version='v1',
+                routes=[
+                    ('products', 'products.index'),
+                    ('products/:id', 'products.detail')
+                ],
                 app_path=os.path.join(os.getenv("HOME",
                                                 "/usr/local/share"),
                                       "brutus"))
